@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.haier.airbox"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon" 
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
+
+        <!-- The service serving the RemoteViews to the collection widget -->
+        <service
+            android:name="com.haier.airbox.service.WeatherWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- The widget provider -->
+        <receiver android:name="com.haier.airbox.provider.WeatherWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <!-- This specifies the widget provider info -->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver>
+
+        <!-- The content provider serving the (fake) weather data -->
+        <provider
+            android:name="com.haier.airbox.provider.WeatherContentProvider"
+            android:authorities="com.haier.airbox.provider.WeatherContentProvider" />
+    </application>
+
+</manifest>
